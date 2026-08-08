@@ -7,12 +7,13 @@ export default function Home() {
 
     return (
         <div>
-        </div>
-        <div>
-            {}
-        </div>
-        <div>
+            </div>
+            <div>
+                {}
+            </div>
+            <div>
             <button id="changeLanguage">中文</button>
+            </div>
         </div>
     );
 }
