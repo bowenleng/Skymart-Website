@@ -5,19 +5,23 @@ import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [language, setLanguage] = useState('en')
 
-  setTo = language === 'en' ? '中文' : 'English'
+  var setTo = language === 'en' ? '中文' : 'English'
 
-  heading = language === 'en' ? 'Welcome to Skymart' : '欢迎来到Skymart'
-  introduction = language === 'en' ? 'Your questions, answered' : '您的问题，已解答'
+  var heading = language === 'en' ? 'Welcome to Skymart' : '欢迎来到Skymart'
+  var introduction = language === 'en' ?
+      'Your questions, answered' :
+      '您的问题，已解答'
 
-  help = language === 'en' ? 'Help' : '帮助'
-  helpNote = language == 'en' ? "Need assistance? Try out our AI agent here!" : "需要帮助吗？请尝试我们的AI代理！"
+  var help = language === 'en' ? 'Help' : '帮助'
+  var helpNote = language == 'en' ? "Need assistance? Try out our AI agent here!" : "需要帮助吗？请尝试我们的AI代理！"
 
-  contact = language === 'en' ? 'Contact Us' : '联系我们'
-  contactNote = language === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
+  var helpButton1 = language === 'en' ? 'AI Agent' : 'AI代理'
+  var helpButton2 = language === 'en' ? 'Email Support' : '电子邮件支持'
+
+  var contact = language === 'en' ? 'Contact Us' : '联系我们'
+  var contactNote = language === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
 
   return (
     <>
@@ -33,7 +37,7 @@ function App() {
         </div>
         <button
           type="button"
-          className="counter"
+          className="language-toggle"
           onClick={() => setLanguage((language) => language === 'en' ? 'zh' : 'en')}
         >
           {setTo}
@@ -53,13 +57,13 @@ function App() {
             <li>
               <a href="" target="_blank">
                 <img className="logo" src={viteLogo} alt="" />
-                AI Agent
+                {helpButton1}
               </a>
             </li>
             <li>
-              <a href="mailto:" target="_blank">
+              <a href="" target="_blank">
                 <img className="button-icon" src={reactLogo} alt="" />
-                Email Support
+                {helpButton2}
               </a>
             </li>
           </ul>
@@ -78,9 +82,9 @@ function App() {
                   role="presentation"
                   aria-hidden="true"
                 >
-                  <use href="/icons.svg#wechat-icon"></use>
+                  {/* <use href="/icons.svg#wechat-icon"></use> */}
                 </svg>
-                WeChat
+                WeChat/微信
               </a>
             </li>
           </ul>
