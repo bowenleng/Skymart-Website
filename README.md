@@ -19,13 +19,22 @@ The React Compiler is not enabled on this template because of its impact on dev 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
 
 ## Backend Setup
-TBA
+Before any code could be ran, a command is required to be downloaded. This command could be downloaded via the command `winget install astral-sh.uv` for windows powershell.
+
+After downloading the steps, type the following into the console:
+- `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+- `uv add "fastapi[standard]"`
+- `uv run fastapi dev`
+
+We also need the ai agent so please also type `pip install openai` into the console.
 
 ## Running the Website
 In order to run the Front end part of this application, you have to install npm
 
 From there on out, the next thing is to use command prompt, then use cd \[path\]/frontend where the "path" would be the location of the file on the computer.
 Alternatively, if you are modifying the code behind the website using visual code studios (or any IDE for that matter), you may also open the terminal, type `cd frontend`, and then type the commands that you need to in order to run the website.
+
+Some IDEs prevent you from running the website using the terminal so for those cases, be sure to type `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` into the terminal before trying to run the code.
 
 With command prompt, first type `npm run build` to build the website.
 

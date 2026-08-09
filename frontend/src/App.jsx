@@ -6,6 +6,27 @@ import './App.css'
 
 function App() {
   const [language, setLanguage] = useState('en')
+  const [msg, setMsg] = useState('');
+  const [change, setChange] = useState(false);
+  const [aiToggled, setAiToggled] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = { message: msg };
+    try {
+      const response = await fetch('http://localhost:5000/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      setChange(true);
+    } catch (error) {
+      setChange(false);
+    }
+  }
 
   var setTo = language === 'en' ? '中文' : 'English'
 
@@ -23,6 +44,19 @@ function App() {
   var contact = language === 'en' ? 'Contact Us' : '联系我们'
   var contactNote = language === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
 
+  var aiButton = aiToggled
+              ? <form onSubmit={handleSubmit} className="section-button">
+                <input name="question" type="text" placeholder={language === 'en' ? "Ask a question..." : "问一个问题..."} onChange={(e) => setQuestion(e.target.value)} />
+                <button type="submit">Send</button>
+              </form>
+              : <button className="section-button" onClick={() => setAiToggled(true)}>
+                <img className="logo" src={viteLogo} alt="" />
+                {helpButton1}
+              </button>;
+
+  if (change) {
+    navigate("/pages/Chat");
+  }
   return (
     <>
       <section id="center">
@@ -55,13 +89,10 @@ function App() {
           <p>{helpNote}</p>
           <ul>
             <li>
-              <a href="" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                {helpButton1}
-              </a>
+              {aiButton}
             </li>
             <li>
-              <a href="" target="_blank">
+              <a href="mailto:ltao197@gmail.com" target="_blank">
                 <img className="button-icon" src={reactLogo} alt="" />
                 {helpButton2}
               </a>
