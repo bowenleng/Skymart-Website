@@ -8,10 +8,12 @@ import './App.css'
 function App() {
   const [lang, setLang] = useState('en')
   const [msg, setMsg] = useState('');
+  const [nextMsg, setNextMsg] = useState('');
+  const [response, setResponse] = useState('');
+  const [chatToggled, setChatToggled] = useState(false)
   const [aiToggled, setAiToggled] = useState(false)
   const [functioning, setFunctioning] = useState(true)
 
-  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { message: msg };
@@ -22,9 +24,11 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-      });
+      }).then(res => res.json()).then(data => setResponse(data.response));
+      setAiToggled(true);
       setFunctioning(true);
-      navigate('/Chat', { state: { lang: lang } });
+      setMsg(nextMsg);
+      setNextMsg('');
     } catch (error) {
       console.log('Error sending message:', error);
       setFunctioning(false);
@@ -48,16 +52,43 @@ function App() {
   var contactNote = lang === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
 
   var send = lang === 'en' ? 'Send' : '发送'
+  var agentHeading = lang === 'en' ? 'Skymart AI Agent' : 'Skymart AI代理'
 
   var aiButton = aiToggled
-              ? <form onSubmit={handleSubmit} className="section-button">
-                <input name="question" type="text" placeholder={lang === 'en' ? "Ask a question..." : "问一个问题..."} onChange={(e) => setMsg(e.target.value)} />
-                <button type="submit">{send}</button>
-              </form>
-              : <button className="section-button" onClick={() => setAiToggled(true)}>
-                <img className="logo" src={viteLogo} alt="" />
-                {helpButton1}
-              </button>;
+          ? (<div>
+            <h3>{agentHeading}</h3>
+            <div class="right-message">
+              {msg}
+            </div>
+            <div class="left-message">
+              {response}
+            </div>
+            <form onSubmit={handleSubmit} className="section-button">
+              <input name="question" type="text" placeholder={lang === 'en' ? "Message" : "消息"} onChange={(e) => setNextMsg(e.target.value)} />
+              <button type="submit">{send}</button>
+            </form>
+          </div>)
+          : <div>
+              <svg className="icon" role="presentation" aria-hidden="true">
+                <use href="/icons.svg#documentation-icon"></use>
+              </svg>
+              <h2>{help}</h2>
+              <p>{helpNote}</p>
+              <ul>
+                <li>
+                  {chatToggled
+                        ? <form onSubmit={handleSubmit} className="section-button">
+                          <input name="question" type="text" placeholder={lang === 'en' ? "Ask a question..." : "问一个问题..."} onChange={(e) => setNextMsg(e.target.value)} />
+                          <button type="submit">{send}</button>
+                        </form>
+                        : <button className="section-button" onClick={() => setChatToggled(true)}>
+                          <img className="logo" src={viteLogo} alt="" />
+                          {helpButton1}
+                        </button>}
+                  {functioning ? "" : <p className="error-message">{lang === 'en' ? "Error: AI Agent Page Cannot be Opened" : "错误：AI代理页面无法打开。"}</p>}
+                </li>
+              </ul>
+          </div>;
 
   return (
     <>
@@ -84,23 +115,7 @@ function App() {
 
       <section id="next-steps">
         <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>{help}</h2>
-          <p>{helpNote}</p>
-          <ul>
-            <li>
-              {aiButton}
-              {functioning ? "" : <p className="error-message">{lang === 'en' ? "Error: AI agent is currently unavailable." : "错误：AI代理当前不可用。"}</p>}
-            </li>
-            <li>
-              <a href="mailto:ltao197@gmail.com" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                {helpButton2}
-              </a>
-            </li>
-          </ul>
+          {aiButton}
         </div>
         <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
@@ -119,6 +134,18 @@ function App() {
                   {/* <use href="/icons.svg#wechat-icon"></use> */}
                 </svg>
                 WeChat/微信
+              </a>
+            </li>
+            <li>
+              <a href="mailto:ltao197@gmail.com" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  {/* <use href="/icons.svg#wechat-icon"></use> */}
+                </svg>
+                Email/电子邮件
               </a>
             </li>
           </ul>

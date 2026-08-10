@@ -24,4 +24,3 @@ frontend/*.local
 *.sw?
 
 backend/app.py
-backend/app.py

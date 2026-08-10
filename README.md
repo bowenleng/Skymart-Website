@@ -23,7 +23,7 @@ Before any code could be ran, a command is required to be downloaded. This comma
 
 After installing the command, a few apis in the requirements tab needs to be installed. The required installations can be done using these commands:
 - `pip install 'pydantic[email]`
-- `pip install openai`
+- `pip install google-genai`
 
 After downloading the steps, type the following into the console to run the backend for the first time:
 - `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
@@ -32,7 +32,7 @@ After downloading the steps, type the following into the console to run the back
 
 To run the backend again, just type `uv run fastapi dev`
 
-In order to get Python to communicate with OpenAI, you must navigate to the app.py file in the backend folder (src: `backend/app.py`) and modify the string.
+In order to get Python to communicate with Gemini, you must navigate to the app.py file in the backend folder (src: `backend/app.py`) and modify the string.
 For the safety purposes, once you modify the string, place the file in .gitignore so the token key does not get spilled to the public.
 
 ## Running the Website
@@ -52,3 +52,5 @@ Then type `npm run preview` to get a link to allow you to run the website on you
 After running the website, you may close the website at any time by pressing Ctrl+C in the command prompt/IDE terminal.
 
 If the code inside the src or public folders were at any point modified after you run the code, please type `npm run build` in the command prompt/IDE terminal to run the website so then when you type `npm run preview` again, the website will update properly.
+
+A shortcut also exists where you may simply use `npm run run` instead.

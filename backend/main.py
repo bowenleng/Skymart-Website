@@ -2,18 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app import TOKEN_KEY
 from pydantic import BaseModel
+from google import genai
 
 class ChatMessage(BaseModel):
     message: str
 
 app = FastAPI()
-#openai.api_key = TOKEN_KEY
-
-#client = openai.OpenAI()
-#response = client.chat.completions.create(
-#    model="gpt-3.5-turbo",
-#    messages="This is for sky box TBA, the user may ask questions in English or in Chinese" # fix: replace TBA with company details
-#)
+client = genai.Client(api_key=TOKEN_KEY) # Initialize the Google GenAI client
 
 # Enable CORS so your React frontend can access this backend
 app.add_middleware(
@@ -24,28 +19,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = []
-
-def send_msg(msg):
-    # Here you can implement your logic to send the message to the AI model
-    # For now, we'll just append it to the chat history and return a dummy response
-    chat_history.append({"role": "user", "content": msg})
-    response = "test response" #client.chat.completions.create(
-    #    model="gpt-3.5-turbo",
-    #    messages=chat_history
-    #).choices[0].message
-    chat_history.append([msg, response])
-    return response
-
 @app.get("/")
 def root():
     return {"message": "Hello, World!"}
 
 @app.post("/chat")
 def receive_data(payload: ChatMessage):
-    response = send_msg(payload.message)
+    msg = payload.message
+    response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=msg
+    ).text
     return {"response": response}
-
-@app.get("/chat_history")
-def get_history():
-    return {"chat_history": chat_history}
