@@ -21,14 +21,23 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Backend Setup
 Before any code could be ran, a command is required to be downloaded. This command could be downloaded via the command `winget install astral-sh.uv` for windows powershell.
 
-After downloading the steps, type the following into the console:
+After installing the command, a few apis in the requirements tab needs to be installed. The required installations can be done using these commands:
+- `pip install 'pydantic[email]`
+- `pip install openai`
+
+After downloading the steps, type the following into the console to run the backend for the first time:
 - `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
 - `uv add "fastapi[standard]"`
 - `uv run fastapi dev`
 
-We also need the ai agent so please also type `pip install openai` into the console.
+To run the backend again, just type `uv run fastapi dev`
+
+In order to get Python to communicate with OpenAI, you must navigate to the app.py file in the backend folder (src: `backend/app.py`) and modify the string.
+For the safety purposes, once you modify the string, place the file in .gitignore so the token key does not get spilled to the public.
 
 ## Running the Website
+To run the webiste, first start up the backend for the website. This is done first by using `cd backend` followed then by using the command `fast dev main.py`.
+
 In order to run the Front end part of this application, you have to install npm
 
 From there on out, the next thing is to use command prompt, then use cd \[path\]/frontend where the "path" would be the location of the file on the computer.

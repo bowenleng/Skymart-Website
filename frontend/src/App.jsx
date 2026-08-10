@@ -1,62 +1,64 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
-  const [language, setLanguage] = useState('en')
+  const [lang, setLang] = useState('en')
   const [msg, setMsg] = useState('');
-  const [change, setChange] = useState(false);
   const [aiToggled, setAiToggled] = useState(false)
+  const [functioning, setFunctioning] = useState(true)
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { message: msg };
     try {
-      const response = await fetch('http://localhost:5000/chat', {
+      const response = await fetch('http://127.0.0.1:8000/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
-      const data = await response.json();
-      setChange(true);
+      setFunctioning(true);
+      navigate('/Chat', { state: { lang: lang } });
     } catch (error) {
-      setChange(false);
+      console.log('Error sending message:', error);
+      setFunctioning(false);
     }
   }
 
-  var setTo = language === 'en' ? '中文' : 'English'
+  var setTo = lang === 'en' ? '中文' : 'English'
 
-  var heading = language === 'en' ? 'Welcome to Skymart' : '欢迎来到Skymart'
-  var introduction = language === 'en' ?
+  var heading = lang === 'en' ? 'Welcome to Skymart' : '欢迎来到Skymart'
+  var introduction = lang === 'en' ?
       'Your questions, answered' :
       '您的问题，已解答'
 
-  var help = language === 'en' ? 'Help' : '帮助'
-  var helpNote = language == 'en' ? "Need assistance? Try out our AI agent here!" : "需要帮助吗？请尝试我们的AI代理！"
+  var help = lang === 'en' ? 'Help' : '帮助'
+  var helpNote = lang == 'en' ? "Need assistance? Try out our AI agent here!" : "需要帮助吗？请尝试我们的AI代理！"
 
-  var helpButton1 = language === 'en' ? 'AI Agent' : 'AI代理'
-  var helpButton2 = language === 'en' ? 'Email Support' : '电子邮件支持'
+  var helpButton1 = lang === 'en' ? 'AI Agent' : 'AI代理'
+  var helpButton2 = lang === 'en' ? 'Email Support' : '电子邮件支持'
 
-  var contact = language === 'en' ? 'Contact Us' : '联系我们'
-  var contactNote = language === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
+  var contact = lang === 'en' ? 'Contact Us' : '联系我们'
+  var contactNote = lang === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
+
+  var send = lang === 'en' ? 'Send' : '发送'
 
   var aiButton = aiToggled
               ? <form onSubmit={handleSubmit} className="section-button">
-                <input name="question" type="text" placeholder={language === 'en' ? "Ask a question..." : "问一个问题..."} onChange={(e) => setQuestion(e.target.value)} />
-                <button type="submit">Send</button>
+                <input name="question" type="text" placeholder={lang === 'en' ? "Ask a question..." : "问一个问题..."} onChange={(e) => setMsg(e.target.value)} />
+                <button type="submit">{send}</button>
               </form>
               : <button className="section-button" onClick={() => setAiToggled(true)}>
                 <img className="logo" src={viteLogo} alt="" />
                 {helpButton1}
               </button>;
 
-  if (change) {
-    navigate("/pages/Chat");
-  }
   return (
     <>
       <section id="center">
@@ -72,7 +74,7 @@ function App() {
         <button
           type="button"
           className="language-toggle"
-          onClick={() => setLanguage((language) => language === 'en' ? 'zh' : 'en')}
+          onClick={() => setLang((lang) => lang === 'en' ? 'zh' : 'en')}
         >
           {setTo}
         </button>
@@ -90,6 +92,7 @@ function App() {
           <ul>
             <li>
               {aiButton}
+              {functioning ? "" : <p className="error-message">{lang === 'en' ? "Error: AI agent is currently unavailable." : "错误：AI代理当前不可用。"}</p>}
             </li>
             <li>
               <a href="mailto:ltao197@gmail.com" target="_blank">
