@@ -28,6 +28,7 @@ After installing the command, a few apis in the requirements tab needs to be ins
 After downloading the steps, type the following into the console to run the backend for the first time:
 - `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
 - `uv add "fastapi[standard]"`
+- `uv pip install google-genai`
 - `uv run fastapi dev`
 
 To run the backend again, just type `uv run fastapi dev`
