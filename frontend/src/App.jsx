@@ -35,32 +35,22 @@ function App() {
   }
 
   var setTo = lang === 'en' ? '中文' : 'English'
-
-  var heading = lang === 'en' ? 'Welcome to Skymart' : '欢迎来到Skymart'
   var introduction = lang === 'en' ?
       'Your questions, answered' :
       '您的问题，已解答'
-
-  var help = lang === 'en' ? 'Help' : '帮助'
   var helpNote = lang == 'en' ? "Need assistance? Try out our AI agent here!" : "需要帮助吗？请尝试我们的AI代理！"
-
-  var helpButton1 = lang === 'en' ? 'AI Agent' : 'AI代理'
-  var helpButton2 = lang === 'en' ? 'Email Support' : '电子邮件支持'
-
-  var contact = lang === 'en' ? 'Contact Us' : '联系我们'
   var contactNote = lang === 'en' ? "Want to make an order, return something, or simply want to ask us something? Contact us here!" : "想要下订单、退货，或者只是想问我们一些问题？请在这里联系我们！"
 
   var send = lang === 'en' ? 'Send' : '发送'
-  var agentHeading = lang === 'en' ? 'Skymart AI Agent' : 'Skymart AI代理'
 
   var aiButton = aiToggled
           ? (<div>
-            <h3>{agentHeading}</h3>
-            <div class="right-message">
-              {msg}
+            <h3>{lang === 'en' ? 'Skymart AI Agent' : '天美AI代理'}</h3>
+            <div className="right-message">
+              <p>{msg}</p>
             </div>
-            <div class="left-message">
-              {response}
+            <div className="left-message">
+              <p>{response}</p>
             </div>
             <form onSubmit={handleSubmit} className="section-button">
               <input name="question" type="text" placeholder={lang === 'en' ? "Message" : "消息"} onChange={(e) => setNextMsg(e.target.value)} />
@@ -71,7 +61,7 @@ function App() {
               <svg className="icon" role="presentation" aria-hidden="true">
                 <use href="/icons.svg#documentation-icon"></use>
               </svg>
-              <h2>{help}</h2>
+              <h2>{lang === 'en' ? 'Help' : '帮助'}</h2>
               <p>{helpNote}</p>
               <ul>
                 <li>
@@ -82,7 +72,7 @@ function App() {
                         </form>
                         : <button className="section-button" onClick={() => setChatToggled(true)}>
                           <img className="logo" src={viteLogo} alt="" />
-                          {helpButton1}
+                          {lang === 'en' ? 'AI Agent' : 'AI代理'}
                         </button>}
                   {functioning ? "" : <p className="error-message">{lang === 'en' ? "Error: AI Agent Page Cannot be Opened" : "错误：AI代理页面无法打开。"}</p>}
                 </li>
@@ -98,7 +88,7 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>{heading}</h1>
+          <h1>{lang === 'en' ? 'Welcome to Skymart' : '欢迎来到天美'}</h1>
           <p>{introduction}</p>
         </div>
         <button
@@ -112,6 +102,18 @@ function App() {
 
       <div className="ticks"></div>
 
+      <div id="next-steps">
+        <div>
+          <h2>{lang === 'en' ? "Storage" : ""}</h2>
+        </div>
+        <div>
+          <h2>{lang === 'en' ? "Reliability" : ""}</h2>
+        </div>
+        <div>
+          <h2>{lang === 'en' ? "Storage" : ""}</h2>
+        </div>
+      </div>
+
       <section id="next-steps">
         <div id="docs">
           {aiButton}
@@ -120,7 +122,7 @@ function App() {
           <svg className="icon" role="presentation" aria-hidden="true">
             <use href="/icons.svg#social-icon"></use>
           </svg>
-          <h2>{contact}</h2>
+          <h2>{lang === 'en' ? 'Contact Us' : '联系我们'}</h2>
           <p>{contactNote}</p>
           <ul>
             <li>

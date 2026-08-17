@@ -4,6 +4,8 @@ from app import TOKEN_KEY
 from pydantic import BaseModel
 from google import genai
 
+startPrompt = "[TBA], do not include any formatting in your response. Please respond with a single paragraph that is concise and to the point. Do not include any additional commentary or explanations. Please respond in the same language as the input message."
+
 class ChatMessage(BaseModel):
     message: str
 

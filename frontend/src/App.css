@@ -17,6 +17,26 @@
   }
 }
 
+.right-message p, .left-message p {
+  font-size: 8px;
+}
+
+.right-message, .left-message {
+  position: absolute;
+  top: 0;
+  width: 60%;
+  color: var(--text-l);
+  pointer-events: none;
+}
+
+.right-message {
+  right: 0;
+}
+
+.left-message {
+  left: 0;
+}
+
 .hero {
   position: relative;
 
